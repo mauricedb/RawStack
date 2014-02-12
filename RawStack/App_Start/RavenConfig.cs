@@ -14,7 +14,7 @@ namespace RawStack
             Store = new EmbeddableDocumentStore
             {
                 ConnectionStringName = "RavenDB",
-                UseEmbeddedHttpServer = true
+                //UseEmbeddedHttpServer = true
             };
             Store.Initialize();
 
