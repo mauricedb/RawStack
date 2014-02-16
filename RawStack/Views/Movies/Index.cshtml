@@ -4,30 +4,16 @@
 
 <h2>Movies</h2>
 
-<div ng-app="" ng-controller="moviesCtrl">
+<div ng-app="myApp" ng-controller="moviesCtrl">
     <ul>
         <li ng-repeat="movie in movies">{{movie.Title}}</li>
     </ul>
-    
+
     <h3>Add movie</h3>
     <label>Title</label>
-    <input type="text" ng-model="newMovie.Title"/>
+    <input type="text" ng-model="newMovie.Title" />
     <button ng-click="addMovie()">Add</button>
 </div>
 
 <script src="~/Scripts/angular.js"></script>
-<script>
-
-    function moviesCtrl($scope, $http) {
-        $http.get("/api/movies").then(function(e) {
-            $scope.movies = e.data;
-        });
-
-        $scope.newMovie = { Title: "" };
-        $scope.addMovie = function () {
-            $http.post("/api/movies", $scope.newMovie).then(function () {
-                window.location = window.location;
-            });
-        };
-    }
-</script>
+<script src="~/app/myApp.js"></script>
