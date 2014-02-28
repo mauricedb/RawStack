@@ -7,14 +7,13 @@ namespace RawStack
 {
     public class RavenConfig
     {
-        public static IDocumentStore Store;
+        public static IDocumentStore Store { get; private set; }
 
         public static void Register()
         {
             Store = new EmbeddableDocumentStore
             {
-                ConnectionStringName = "RavenDB",
-                //UseEmbeddedHttpServer = true
+                ConnectionStringName = "RavenDB"
             };
             Store.Initialize();
 
