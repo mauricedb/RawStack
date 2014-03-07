@@ -1,5 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Raven.Client;
+using Raven.Client.Embedded;
 using RawStack.Api;
 using RawStack.Models;
 
@@ -9,20 +12,42 @@ namespace RawStack.Tests.Api
     public class MoviesControllerTests
     {
         private MoviesController _controller;
+        private EmbeddableDocumentStore _documentStore;
+        private IDocumentSession _session;
 
         [TestInitialize]
         public void TestInitialize()
         {
             // Arrange
-            RavenConfig.Register();
-            _controller = new MoviesController();
+            _documentStore = new EmbeddableDocumentStore
+            {
+                ConnectionStringName = "RavenDB"
+            };
+            _documentStore.Initialize();
+            _session = _documentStore.OpenSession();
+            _controller = new MoviesController(_session);
+        }
+
+        [TestCleanup]
+        public void TestCleanup()
+        {
+            if (_session != null)
+            {
+                _session.Dispose();
+                _session = null;
+            }
+            if (_documentStore != null)
+            {
+                _documentStore.Dispose();
+                _documentStore = null;
+            }
         }
 
         [TestMethod]
         public void GetMoviesShouldZeroLoadMovies()
         {
             // Act
-            var movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies();
 
             // Assert
             Assert.AreEqual(0, movies.Count());
@@ -32,14 +57,11 @@ namespace RawStack.Tests.Api
         public void GetMoviesShouldOneLoadMovies()
         {
             // Arrange
-            using (var session = RavenConfig.Store.OpenSession())
-            {
-                session.Store(new Movie());
-                session.SaveChanges();
-            }
+            _session.Store(new Movie());
+            _session.SaveChanges();
 
             // Act
-            var movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies();
 
             // Assert
             Assert.AreEqual(1, movies.Count());
@@ -49,15 +71,12 @@ namespace RawStack.Tests.Api
         public void GetMoviesShouldTwoLoadMovies()
         {
             // Arrange
-            using (var session = RavenConfig.Store.OpenSession())
-            {
-                session.Store(new Movie());
-                session.Store(new Movie());
-                session.SaveChanges();
-            }
+            _session.Store(new Movie());
+            _session.Store(new Movie());
+            _session.SaveChanges();
 
             // Act
-            var movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies();
 
             // Assert
             Assert.AreEqual(2, movies.Count());

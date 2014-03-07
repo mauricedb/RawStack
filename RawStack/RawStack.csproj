@@ -54,6 +54,12 @@
     <Reference Include="Microsoft.WindowsAzure.Storage, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\Packages\WindowsAzure.Storage.2.0.6.1\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject">
+      <HintPath>..\Packages\Ninject.3.0.1.10\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common">
+      <HintPath>..\Packages\Ninject.Web.Common.3.0.0.7\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Raven.Abstractions">
       <HintPath>..\Packages\RavenDB.Client.2.5.2750\lib\net45\Raven.Abstractions.dll</HintPath>
     </Reference>
@@ -133,6 +139,9 @@
       <Private>True</Private>
       <HintPath>..\Packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivator">
+      <HintPath>..\Packages\WebActivator.1.5.3\lib\net40\WebActivator.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\Packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -149,7 +158,10 @@
     <Compile Include="Api\MoviesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\RavenConfig.cs" />
+    <Compile Include="Ninject\NinjectDependencyResolver.cs" />
+    <Compile Include="Ninject\NinjectDependencyScope.cs" />
+    <Compile Include="Ninject\NinjectWebCommon.cs" />
+    <Compile Include="Ninject\RavenModule.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\HelpPage\ApiDescriptionExtensions.cs" />
