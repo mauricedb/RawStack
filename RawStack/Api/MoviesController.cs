@@ -25,5 +25,12 @@ namespace RawStack.Api
             _session.Store(movie);
             _session.SaveChanges();
         }
+
+        public void DeleteMovie(int id)
+        {
+            var movie = _session.Load<Movie>(id);
+            _session.Delete(movie);
+            _session.SaveChanges();
+        }
     }
 }
