@@ -15,9 +15,17 @@ namespace RawStack.Api
             _session = session;
         }
 
-        public IEnumerable<Movie> GetMovies()
+        public IEnumerable<Movie> GetMovies(int page)
         {
-            return _session.Query<Movie>().ToList();
+            const int pageSize = 128;
+
+            var movies = _session.Query<Movie>()
+                .OrderBy(m => m.Title)
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return movies;
         }
 
         public void PostMovie(Movie movie)

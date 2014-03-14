@@ -58,7 +58,7 @@ describe("The moviesCtrl http requests", function () {
             { id: 1, title: "A movie" },
             { id: 2, title: "Another movie" }];
 
-        httpBackend.expect("GET", "/api/movies").respond(movies);
+        httpBackend.expect("GET", "/api/movies?page=0").respond(movies);
 
         httpBackend.flush();
 
@@ -67,10 +67,10 @@ describe("The moviesCtrl http requests", function () {
 
     it("should not populate the movies array when the HTTP request fails", function () {
 
-        httpBackend.expect("GET", "/api/movies").respond(404);
+        httpBackend.expect("GET", "/api/movies?page=0").respond(404);
 
         httpBackend.flush();
 
-        expect(scope.movies).toBeUndefined();
+        expect(scope.movies).toEqual([]);
     });
 });

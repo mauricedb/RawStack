@@ -14,8 +14,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      './Scripts/jquery-1.10.2.js',
       './Scripts/angular.js',
       './Scripts/angular-mocks.js',
+      './Scripts/ng-infinite-scroll.js',
       './app/**/*.js',
       '../RawStack.Tests/app/**/*.js'
     ],

@@ -5,7 +5,7 @@
 <h2>Movies</h2>
 
 <div ng-app="myApp" ng-controller="moviesCtrl">
-    <ul>
+    <ul infinite-scroll='nextPage()' infinite-scroll-disabled='loadingData'>
         <li ng-repeat="movie in movies">{{movie.Title}}</li>
     </ul>
 
@@ -15,5 +15,7 @@
     <button ng-click="addMovie()">Add</button>
 </div>
 
-<script src="~/Scripts/angular.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/ng-infinite-scroll.min.js"></script>
 <script src="~/app/myApp.js"></script>

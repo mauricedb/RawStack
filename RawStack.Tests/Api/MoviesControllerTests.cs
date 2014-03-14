@@ -47,7 +47,7 @@ namespace RawStack.Tests.Api
         public void GetMoviesShouldZeroLoadMovies()
         {
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies(0);
 
             // Assert
             Assert.AreEqual(0, movies.Count());
@@ -61,7 +61,7 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies(0);
 
             // Assert
             Assert.AreEqual(1, movies.Count());
@@ -76,7 +76,7 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies();
+            IEnumerable<Movie> movies = _controller.GetMovies(0);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
