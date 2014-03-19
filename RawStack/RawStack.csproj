@@ -158,6 +158,9 @@
     <Compile Include="Api\MoviesController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="Models\CastActor.cs" />
+    <Compile Include="Models\Director.cs" />
+    <Compile Include="Models\Posters.cs" />
     <Compile Include="Ninject\NinjectDependencyResolver.cs" />
     <Compile Include="Ninject\NinjectDependencyScope.cs" />
     <Compile Include="Ninject\NinjectWebCommon.cs" />

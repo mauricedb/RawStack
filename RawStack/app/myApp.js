@@ -12,7 +12,7 @@
             $http.get("/api/movies?page=" + page).then(function (e) {
                 page++;
                 [].push.apply($scope.movies, e.data);
-                $scope.loadingData = false;
+                $scope.loadingData = !e.data.length;
             });
         };
 
