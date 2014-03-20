@@ -15,12 +15,19 @@ namespace RawStack.Api
             _session = session;
         }
 
-        public IEnumerable<Movie> GetMovies(int page)
+        public IEnumerable<Movie> GetMovies(int page, [FromUri]string[] genres)
         {
             const int pageSize = 128;
 
-            var movies = _session.Query<Movie>()
-                .OrderBy(m => m.Title)
+            var query = _session.Advanced.LuceneQuery<Movie>();
+            if (genres.Length > 0 && genres[0] != null)
+            {
+                var filter = "Genres:(\"" + string.Join("\" AND \"", genres) + "\")";
+                query = query.Where(filter);
+            }
+
+            var movies = query
+                .OrderBy(m=> m.Title)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToList();

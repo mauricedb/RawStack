@@ -47,7 +47,7 @@ namespace RawStack.Tests.Api
         public void GetMoviesShouldZeroLoadMovies()
         {
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0);
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
 
             // Assert
             Assert.AreEqual(0, movies.Count());
@@ -61,7 +61,7 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0);
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
 
             // Assert
             Assert.AreEqual(1, movies.Count());
@@ -76,7 +76,73 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0);
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
+
+            // Assert
+            Assert.AreEqual(2, movies.Count());
+        }
+
+        [TestMethod]
+        public void GetMoviesShouldZeroLoadMovieWithGenre()
+        {
+            // Arrange
+            _session.Store(new Movie() { Genres = new[] { "g1" } });
+            _session.Store(new Movie());
+            _session.SaveChanges();
+
+            // Act
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g2" });
+
+            // Assert
+            Assert.AreEqual(0, movies.Count());
+        }
+
+        [TestMethod]
+        public void GetMoviesShouldOneLoadMovieWithGenre()
+        {
+            // Arrange
+            _session.Store(new Movie() { Genres = new[] { "g1" } });
+            _session.Store(new Movie());
+            _session.SaveChanges();
+
+            // Act
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g1" });
+
+            // Assert
+            Assert.AreEqual(1, movies.Count());
+        }
+
+        [TestMethod]
+        public void GetMoviesShouldTwoLoadMovieWithGenre()
+        {
+            // Arrange
+            _session.Store(new Movie() { Genres = new[] { "g1" } });
+            _session.Store(new Movie() { Genres = new[] { "g1", "g2" } });
+            _session.Store(new Movie() { Genres = new[] { "g1", "g2" } });
+            _session.Store(new Movie() { Genres = new[] { "g2" } });
+            _session.Store(new Movie());
+            _session.SaveChanges();
+
+            // Act
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g1", "g2" });
+
+            // Assert
+            Assert.AreEqual(2, movies.Count());
+        }
+
+        [TestMethod]
+        public void GetMoviesWithSpacesShouldTwoLoadMovieWithGenre()
+        {
+            // Arrange
+            _session.Store(new Movie() { Genres = new[] { "g 1" } });
+            _session.Store(new Movie() { Genres = new[] { "g 1", "g 2" } });
+            _session.Store(new Movie() { Genres = new[] { "g 1", "g 2" } });
+            _session.Store(new Movie() { Genres = new[] { "g 2" } });
+            _session.Store(new Movie());
+            _session.SaveChanges();
+
+            // Act
+            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g 1", "g 2" });
 
             // Assert
             Assert.AreEqual(2, movies.Count());

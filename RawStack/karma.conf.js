@@ -16,6 +16,7 @@ module.exports = function(config) {
     files: [
       './Scripts/jquery-1.10.2.js',
       './Scripts/angular.js',
+      './Scripts/angular-route.js',
       './Scripts/angular-mocks.js',
       './Scripts/ng-infinite-scroll.js',
       './app/**/*.js',

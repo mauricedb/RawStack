@@ -1,15 +1,50 @@
 ﻿(function () {
     'use strict';
-    var module = angular.module("myApp", ["infinite-scroll"]);
+    var module = angular.module("myApp", ["infinite-scroll", "ngRoute"]);
 
-    module.controller("moviesCtrl", function ($scope, $http) {
+    module.config(function ($routeProvider) {
+        $routeProvider.when("/movies", {
+            controller: "moviesListCtrl",
+            templateUrl: "/app/moviesList.html",
+            resolve: {
+                genres: function () {
+                    return [];
+                }
+            }
+        });
+        $routeProvider.when("/movies/genres/:genres", {
+            controller: "moviesListCtrl",
+            templateUrl: "/app/moviesList.html",
+            resolve: {
+                genres: function ($route) {
+                    var genres = $route.current.params.genres;
+                    return genres.split(",");
+                }
+            }
+        });
+
+        $routeProvider.otherwise({
+            redirectTo: "/movies"
+        });
+    });
+
+    module.controller("moviesListCtrl", function ($scope, $http, $location, genres) {
         var page = 0;
         $scope.movies = [];
         $scope.loadingData = false;
 
         $scope.nextPage = function () {
             $scope.loadingData = true;
-            $http.get("/api/movies?page=" + page).then(function (e) {
+
+            var genresQuery = "";
+            if (genres.length) {
+                genresQuery = "&genres=" +
+                    genres
+                        .map(encodeURIComponent)
+                        .join("&genres=");
+            }
+
+            $http.get("/api/movies?page=" + page + genresQuery).then(function (e) {
                 page++;
                 [].push.apply($scope.movies, e.data);
                 $scope.loadingData = !e.data.length;
@@ -17,12 +52,17 @@
         };
 
         $scope.nextPage();
-        
+
         $scope.newMovie = { Title: "" };
         $scope.addMovie = function () {
             $http.post("/api/movies", $scope.newMovie).then(function () {
                 window.location = window.location;
             });
+        };
+
+        $scope.filterByGenre = function (genre) {
+            genres.push(genre);
+            $location.path("/movies/genres/" + genres.join(","));
         };
     });
 }());

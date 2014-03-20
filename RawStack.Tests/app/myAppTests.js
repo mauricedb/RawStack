@@ -1,19 +1,20 @@
-﻿describe("The moviesCtrl", function () {
+﻿describe("The moviesListCtrl", function () {
     'use strict';
 
     beforeEach(module("myApp"));
 
     it("can be created", inject(function ($controller) {
         var scope = {};
-        var ctrl = $controller("moviesCtrl", {
-            $scope: scope
+        var ctrl = $controller("moviesListCtrl", {
+            $scope: scope,
+            genres:[]
         });
 
         expect(ctrl).toBeDefined();
     }));
 });
 
-describe("The moviesCtrl scope", function () {
+describe("The moviesListCtrl scope", function () {
     'use strict';
 
     var scope;
@@ -22,8 +23,9 @@ describe("The moviesCtrl scope", function () {
 
     beforeEach(inject(function ($controller) {
         scope = {};
-        $controller("moviesCtrl", {
-            $scope: scope
+        $controller("moviesListCtrl", {
+            $scope: scope,
+            genres: []
         });
     }));
 
@@ -37,7 +39,7 @@ describe("The moviesCtrl scope", function () {
 });
 
 
-describe("The moviesCtrl http requests", function () {
+describe("The moviesListCtrl http requests", function () {
     'use strict';
 
     var scope, httpBackend;
@@ -48,8 +50,9 @@ describe("The moviesCtrl http requests", function () {
         httpBackend = $httpBackend;
 
         scope = {};
-        $controller("moviesCtrl", {
-            $scope: scope
+        $controller("moviesListCtrl", {
+            $scope: scope,
+            genres: []
         });
     }));
 
