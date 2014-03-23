@@ -28,7 +28,7 @@
         });
     });
 
-    module.controller("moviesListCtrl", function ($scope, $http, $location, genres) {
+    module.controller("moviesListCtrl", function ($scope, $http, $location, $window, genres) {
         var page = 0;
         $scope.movies = [];
         $scope.loadingData = false;
@@ -63,6 +63,15 @@
         $scope.filterByGenre = function (genre) {
             genres.push(genre);
             $location.path("/movies/genres/" + genres.join(","));
+        };
+
+        $scope.showMoviePoster = function () {
+            var width = ($window.innerWidth > 0) ? $window.innerWidth : $window.screen.width;
+            return width > 767;
+        };
+
+        $window.onresize = function () {
+            $scope.$digest();
         };
     });
 }());
