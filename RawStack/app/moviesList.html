@@ -3,7 +3,7 @@
     <div class="row well" ng-repeat="movie in movies">
         <div class="col-sm-2 hidden-xs">
             <img ng-src="{{movie.Posters.Profile}}"
-                 zzzzng-if="showMoviePoster()"
+                 ng-if="showMoviePoster()"
                  class="img-responsive" />
         </div>
         <div class="col-sm-10">
