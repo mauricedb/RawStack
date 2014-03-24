@@ -30,7 +30,7 @@ describe("The moviesListCtrl scope", function () {
     }));
 
     it("has a newMovie object", function () {
-        expect(scope.newMovie).toEqual({ Title: "" });
+        expect(scope.newMovie).toEqual({ title: "" });
     });
 
     it("has a addMovie function", function () {

@@ -53,7 +53,7 @@
 
         $scope.nextPage();
 
-        $scope.newMovie = { Title: "" };
+        $scope.newMovie = { title: "" };
         $scope.addMovie = function () {
             $http.post("/api/movies", $scope.newMovie).then(function () {
                 window.location = window.location;

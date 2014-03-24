@@ -2,20 +2,20 @@
     
     <div class="row well" ng-repeat="movie in movies">
         <div class="col-sm-2 hidden-xs">
-            <img ng-src="{{movie.Posters.Profile}}"
+            <img ng-src="{{movie.posters.profile}}"
                  ng-if="showMoviePoster()"
                  class="img-responsive" />
         </div>
         <div class="col-sm-10">
-            <h4 href="" class="Title">{{movie.Title}}</h4>
+            <h4 href="" class="Title">{{movie.title}}</h4>
             <p>
-                {{movie.CriticsConsensus}}
+                {{movie.criticsConsensus}}
             </p>
             <span class="pull-left">
                 <button class="btn btn-primary">Read More</button>
             </span>
             <span class="pull-right">
-                <span ng-repeat="genre in movie.Genres">
+                <span ng-repeat="genre in movie.genres">
                     <button class="btn btn-info  btn-xs"
                             ng-click="filterByGenre(genre)">
                         <span class="glyphicon glyphicon-tag"></span>
