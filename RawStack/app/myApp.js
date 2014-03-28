@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    var module = angular.module("myApp", ["infinite-scroll", "ngRoute"]);
+    var module = angular.module("myApp", ["infinite-scroll", "ngRoute", "rawAjaxBusyIndicator"]);
 
     module.config(function ($routeProvider) {
         $routeProvider.when("/movies", {

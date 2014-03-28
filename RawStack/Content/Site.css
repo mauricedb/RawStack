@@ -40,3 +40,12 @@ input[type="checkbox"].input-validation-error {
 .validation-summary-valid {
     display: none;
 }
+
+.ajax-busy-indicator {
+    position: fixed;
+    top: 50px;
+    right: 15px;
+    background-image: url("/Content/busy_indicator.gif");
+    height: 48px;
+    width: 48px;
+}
