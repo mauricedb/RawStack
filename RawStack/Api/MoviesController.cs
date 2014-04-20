@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Controllers;
 using Raven.Client;
 using RawStack.Models;
 
@@ -27,12 +29,19 @@ namespace RawStack.Api
             }
 
             var movies = query
-                .OrderBy(m=> m.Title)
+                .OrderBy(m => m.Title)
                 .Skip(page * pageSize)
                 .Take(pageSize)
                 .ToList();
 
             return movies;
+        }
+
+        public Movie GetMovie(int id)
+        {
+            var movie = _session.Load<Movie>(id);
+            
+            return movie;
         }
 
         public void PostMovie(Movie movie)

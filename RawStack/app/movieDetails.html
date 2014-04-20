@@ -1,0 +1,24 @@
+﻿<div>
+
+    Movie details
+    <br />
+    <h2>{{movie.title}}</h2>
+    <ul>
+        <li ng-repeat="director in movie.abridgedDirectors">
+            {{director.name}}
+        </li>
+    </ul>
+    <p>{{movie.criticsConsensus}}</p>
+    <p>{{movie.synopsis}}</p>
+    <p>{{movie.genres.join(", ")}}</p>
+    <ul>
+        <li ng-repeat="cast in movie.abridgedCast">
+            {{cast.name}} as {{cast.characters.join(", ")}}
+        </li>
+    </ul>
+    <hr />
+
+    <pre>
+        {{movie | json}}
+    </pre>
+</div>

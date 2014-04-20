@@ -22,6 +22,10 @@
                 }
             }
         });
+        $routeProvider.when("/movies/:id", {
+            controller: "movieDetailsCtrl",
+            templateUrl: "/app/movieDetails.html"
+        });
 
         $routeProvider.otherwise({
             redirectTo: "/movies"
@@ -73,5 +77,14 @@
         $window.onresize = function () {
             $scope.$digest();
         };
+    });
+
+    mod.controller("movieDetailsCtrl", function ($scope, $http, $routeParams) {
+        $http.get("/api/movies/" + $routeParams.id).then(function(e) {
+            $scope.movie = e.data;
+        }, function (err) {
+
+        });
+
     });
 }());
