@@ -17,20 +17,35 @@ namespace RawStack.Api
             _session = session;
         }
 
-        public IEnumerable<Movie> GetMovies(int page, [FromUri]string[] genres)
+        public class MoviesRequest
         {
-            const int pageSize = 128;
+            public int Page { get; set; }
+            public string[] Genres { get; set; }
+            public string Director { get; set; }
+        }
+
+        public IEnumerable<Movie> GetMovies([FromUri]MoviesRequest request)
+        //public IEnumerable<Movie> GetMovies(
+        //    int page, [FromUri]string[] genres, [FromUri]string director)
+        {
+            const int pageSize = 32;
 
             var query = _session.Advanced.LuceneQuery<Movie>();
-            if (genres.Length > 0 && genres[0] != null)
+            if (request.Genres != null && request.Genres.Length > 0 && request.Genres[0] != null)
             {
-                var filter = "Genres:(\"" + string.Join("\" AND \"", genres) + "\")";
+                var filter = "Genres:(\"" + string.Join("\" AND \"", request.Genres) + "\")";
+                query = query.Where(filter);
+            }
+
+            if (request.Director != null)
+            {
+                var filter = "AbridgedDirectors:(\"" + request.Director + "\")";
                 query = query.Where(filter);
             }
 
             var movies = query
                 .OrderBy(m => m.Title)
-                .Skip(page * pageSize)
+                .Skip(request.Page * pageSize)
                 .Take(pageSize)
                 .ToList();
 
@@ -40,7 +55,7 @@ namespace RawStack.Api
         public Movie GetMovie(int id)
         {
             var movie = _session.Load<Movie>(id);
-            
+
             return movie;
         }
 

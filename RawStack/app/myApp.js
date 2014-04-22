@@ -9,6 +9,9 @@
             resolve: {
                 genres: function () {
                     return [];
+                },
+                director: function () {
+                    return undefined;
                 }
             }
         });
@@ -19,6 +22,21 @@
                 genres: function ($route) {
                     var genres = $route.current.params.genres;
                     return genres.split(",");
+                },
+                director: function () {
+                    return undefined;
+                }
+            }
+        });
+        $routeProvider.when("/movies/director/:director", {
+            controller: "moviesListCtrl",
+            templateUrl: "/app/moviesList.html",
+            resolve: {
+                genres: function () {
+                    return [];
+                },
+                director: function ($route) {
+                    return $route.current.params.director;
                 }
             }
         });
@@ -32,7 +50,7 @@
         });
     });
 
-    module.controller("moviesListCtrl", function ($scope, $http, $location, $window, genres) {
+    module.controller("moviesListCtrl", function ($scope, $http, $location, $window, genres, director) {
         var page = 0;
         $scope.movies = [];
         $scope.loadingData = false;
@@ -40,15 +58,19 @@
         $scope.nextPage = function () {
             $scope.loadingData = true;
 
-            var genresQuery = "";
+            var query = "";
             if (genres.length) {
-                genresQuery = "&genres=" +
+                query = "&genres=" +
                     genres
                         .map(encodeURIComponent)
                         .join("&genres=");
             }
+            
+            if (director) {
+                query += "&director=" + encodeURIComponent(director);
+            }
 
-            $http.get("/api/movies?page=" + page + genresQuery).then(function (e) {
+            $http.get("/api/movies?page=" + page + query).then(function (e) {
                 page++;
                 [].push.apply($scope.movies, e.data);
                 $scope.loadingData = !e.data.length;
@@ -80,7 +102,7 @@
     });
 
     mod.controller("movieDetailsCtrl", function ($scope, $http, $routeParams) {
-        $http.get("/api/movies/" + $routeParams.id).then(function(e) {
+        $http.get("/api/movies/" + $routeParams.id).then(function (e) {
             $scope.movie = e.data;
         }, function (err) {
 

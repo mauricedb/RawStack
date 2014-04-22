@@ -1,24 +1,74 @@
-﻿<div>
+﻿<br />
 
-    Movie details
-    <br />
-    <h2>{{movie.title}}</h2>
-    <ul>
-        <li ng-repeat="director in movie.abridgedDirectors">
-            {{director.name}}
-        </li>
-    </ul>
-    <p>{{movie.criticsConsensus}}</p>
-    <p>{{movie.synopsis}}</p>
-    <p>{{movie.genres.join(", ")}}</p>
-    <ul>
-        <li ng-repeat="cast in movie.abridgedCast">
-            {{cast.name}} as {{cast.characters.join(", ")}}
-        </li>
-    </ul>
-    <hr />
+<div class=" well">
+    <div class="row">
+        <h1 class="col-sm-10">{{movie.title}}</h1>
+    </div>
 
-    <pre>
-        {{movie | json}}
-    </pre>
+    <div class="row">
+        <label class="col-sm-2">Directors</label>
+        <ul class="col-sm-10 list-unstyled">
+            <li ng-repeat="director in movie.abridgedDirectors">
+                <a ng-href="{{'#/movies/director/' + director}}">{{director}}</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Critics consensus</label>
+        <span class="col-sm-10">{{movie.criticsConsensus}}</span>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Critics rating</label>
+        <span class="col-sm-10">{{movie.ratings.criticsScore}}</span>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Audience rating</label>
+        <span class="col-sm-10">{{movie.ratings.audienceScore}}</span>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Genre</label>
+        <ul class="col-sm-10 list-unstyled">
+            <li ng-repeat="genre in movie.genres">
+                <a ng-href="{{'#/movies/genres/' + genre}}">{{genre}}</a>
+            </li>
+        </ul>
+    </div>
+    
+    <div class="row">
+        <label class="col-sm-2">Year</label>
+        <span class="col-sm-10">{{movie.year}}</span>
+    </div>
+
+    <div class="row">
+        <label class="col-sm-2">Rating</label>
+        <span class="col-sm-10">{{movie.rating}}</span>
+    </div>
+
+    <div class="row">
+        <img ng-src="{{movie.posters.original}}"
+             alt="Movie poster"
+             class="img-responsive col-md-4 col-md-offset-2" />
+    </div>
+    <div class="row">
+        <label class="col-sm-2">Synopsis</label>
+        <span class="col-sm-10">{{movie.synopsis||"None"}}</span>
+    </div>
+    <div class="row">
+        <label class="col-sm-2">Cast</label>
+        <ul class="col-sm-10 list-unstyled">
+            <li ng-repeat="cast in movie.abridgedCast">
+                <a ng-href="{{'#/movies/actor/' + cast.name}}">{{cast.name}}</a> as {{cast.characters.join(", ")}}
+            </li>
+        </ul>
+    </div>
 </div>
+
+<!--<hr />
+
+<pre>
+    {{movie | json}}
+</pre>-->
