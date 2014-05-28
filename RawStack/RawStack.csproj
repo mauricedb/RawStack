@@ -206,6 +206,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\MoviesAdminController.cs" />
     <Compile Include="Models\CastActor.cs" />
     <Compile Include="Models\Director.cs" />
     <Compile Include="Models\Posters.cs" />
@@ -224,7 +225,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\moviesAdminApp.js" />
+    <Content Include="app\moviesAdminList.html" />
     <Content Include="app\moviesList.html" />
+    <Content Include="app\moviesData.js" />
     <Content Include="app\myApp.js" />
     <Content Include="app\shared\ajaxBusyIndicator.js" />
     <Content Include="app\movieDetails.html" />
@@ -234,6 +238,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\busy_indicator.gif" />
+    <Content Include="Content\ng-grid.css" />
+    <Content Include="Content\ng-grid.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -279,6 +285,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <Content Include="Scripts\modernizr-2.7.2.js" />
+    <Content Include="Scripts\ng-grid.js" />
+    <Content Include="Scripts\ng-grid.min.js" />
     <Content Include="Scripts\ng-infinite-scroll.js" />
     <Content Include="Scripts\ng-infinite-scroll.min.js" />
     <Content Include="Scripts\respond.js" />
@@ -306,6 +314,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Movies\Index.cshtml" />
+    <Content Include="Views\MoviesAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

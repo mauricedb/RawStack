@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Movies Administration";
+}
+
+<link href="~/Content/ng-grid.min.css" rel="stylesheet" />
+
+<h2>@ViewBag.Title</h2>
+
+<div ng-app="moviesAdminApp">
+    <div raw-ajax-busy-indicator="" class="ajax-busy-indicator">
+    </div>
+    <div ng-view=""></div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/angular.min.js"></script>
+<script src="~/Scripts/angular-route.min.js"></script>
+<script src="~/Scripts/ng-grid.min.js"></script>
+<script src="~/app/shared/ajaxBusyIndicator.js"></script>
+<script src="~/app/moviesData.js"></script>
+<script src="~/app/moviesAdminApp.js"></script>

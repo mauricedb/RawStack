@@ -3,39 +3,16 @@
 
     beforeEach(module("myApp"));
 
-    it("can be created", inject(function ($controller) {
-        var scope = {};
+    it("can be created", inject(function ($controller, $rootScope) {
+        var scope = $rootScope.$new();
         var ctrl = $controller("moviesListCtrl", {
             $scope: scope,
-            genres:[]
+            genres: [],
+            director: ""
         });
 
         expect(ctrl).toBeDefined();
     }));
-});
-
-describe("The moviesListCtrl scope", function () {
-    'use strict';
-
-    var scope;
-
-    beforeEach(module("myApp"));
-
-    beforeEach(inject(function ($controller) {
-        scope = {};
-        $controller("moviesListCtrl", {
-            $scope: scope,
-            genres: []
-        });
-    }));
-
-    it("has a newMovie object", function () {
-        expect(scope.newMovie).toEqual({ title: "" });
-    });
-
-    it("has a addMovie function", function () {
-        expect(typeof scope.addMovie).toBe("function");
-    });
 });
 
 
@@ -46,13 +23,14 @@ describe("The moviesListCtrl http requests", function () {
 
     beforeEach(module("myApp"));
 
-    beforeEach(inject(function ($controller, $httpBackend) {
+    beforeEach(inject(function ($controller, $httpBackend, $rootScope) {
         httpBackend = $httpBackend;
 
-        scope = {};
+        scope = $rootScope.$new();
         $controller("moviesListCtrl", {
             $scope: scope,
-            genres: []
+            genres: [],
+            director: ""
         });
     }));
 
