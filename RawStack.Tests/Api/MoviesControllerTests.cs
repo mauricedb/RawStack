@@ -47,7 +47,8 @@ namespace RawStack.Tests.Api
         public void GetMoviesShouldZeroLoadMovies()
         {
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
+            var request = new MoviesController.MoviesRequest();
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(0, movies.Count());
@@ -61,7 +62,8 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
+            var request = new MoviesController.MoviesRequest();
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(1, movies.Count());
@@ -76,7 +78,8 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new string[] { });
+            var request = new MoviesController.MoviesRequest();
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
@@ -91,7 +94,9 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g2" });
+            var request = new MoviesController.MoviesRequest();
+            request.Genres = new[] { "g2" };
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(0, movies.Count());
@@ -106,7 +111,9 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g1" });
+            var request = new MoviesController.MoviesRequest();
+            request.Genres = new[] { "g1" };
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(1, movies.Count());
@@ -124,7 +131,9 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g1", "g2" });
+            var request = new MoviesController.MoviesRequest();
+            request.Genres = new[] { "g1", "g2" };
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
@@ -142,7 +151,9 @@ namespace RawStack.Tests.Api
             _session.SaveChanges();
 
             // Act
-            IEnumerable<Movie> movies = _controller.GetMovies(0, new[] { "g 1", "g 2" });
+            var request = new MoviesController.MoviesRequest();
+            request.Genres = new[] { "g 1", "g 2" };
+            IEnumerable<Movie> movies = _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
