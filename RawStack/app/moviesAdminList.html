@@ -1,7 +1,5 @@
 ﻿<h3>moviesAdminList</h3>
 
-Bla
-
 <style> 
 .gridStyle {
     /*border: 1px solid rgb(212,212,212);
@@ -9,5 +7,14 @@ Bla
     height: 300px
 }</style>
 
-<div class="gridStyle" ng-grid="gridOptions">
+<div class="row form-group">
+	<label class="col-sm-2 control-label">Filter</label>
+	<ul class="col-sm-10">
+		<input type="text" class="form-control" ng-model="filterOptions.filterText" />
+	</ul>
+</div>
+
+<div class="row">
+	<div class="gridStyle" ng-grid="gridOptions">
+	</div>
 </div>
