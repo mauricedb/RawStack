@@ -18,6 +18,7 @@
         $scope.gridOptions = {
             data: 'movies',
             showGroupPanel: true,
+			filterOptions: $scope.filterOptions,
             columnDefs: [
                 { field: 'title', displayName: 'Title' },
                 { field: 'abridgedDirectors.join(", ")', displayName: 'Directors' }
