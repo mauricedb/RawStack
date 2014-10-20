@@ -1,6 +1,8 @@
 The RAW Stack
 ========
 
+[![Build status](https://ci.appveyor.com/api/projects/status/87g7ilroq4arwayi?svg=true)](https://ci.appveyor.com/project/mauricedb/rawstack)
+
 Why the RAW stack? Well it is kind of the equivalent of the MEAN stack. Not that there is anything wrong with the MEAN stack, quite the opposite, but being a .NET developer I really like to keep using .NET where it's strengths lie and where it is suitable. On the server C# with its fast async capabilities is still quite awesome.
 
 A running demo can be found [here](http://rawstack.azurewebsites.net/).
