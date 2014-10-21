@@ -1,11 +1,14 @@
-﻿(function() {
+﻿(function () {
     var module = angular.module("moviesData", []);
 
-    module.factory("moviesSvc", function($http, $q) {
+    module.factory("moviesSvc", function ($http, $q) {
         var movies = [];
         var page = 0;
         var genres, director;
 
+        function get(id) {
+            return $http.get("/api/movies/" + id);
+        }
 
         function nextPage() {
             var defer = $q.defer();
@@ -22,7 +25,7 @@
                 queryStr += "&director=" + encodeURIComponent(director);
             }
 
-            $http.get("/api/movies?page=" + page + queryStr).then(function(e) {
+            $http.get("/api/movies?page=" + page + queryStr).then(function (e) {
                 [].push.apply(movies, e.data);
                 defer.resolve(!!e.data.length);
             });
@@ -47,6 +50,7 @@
         }
 
         return {
+            get: get,
             query: query,
             nextPage: nextPage
         };

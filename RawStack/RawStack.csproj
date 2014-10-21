@@ -227,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\moviesAdminApp.js" />
+    <Content Include="app\moviesAdminEdit.html" />
     <Content Include="app\moviesAdminList.html" />
     <Content Include="app\moviesList.html" />
     <Content Include="app\moviesData.js" />
