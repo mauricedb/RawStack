@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using RawStack.Controllers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -32,7 +33,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - ABL - The Problem Solver</p>
+            <p>&copy; @DateTime.Now.Year - ABL - The Problem Solver (Version: @typeof(HomeController ).Assembly.GetName().Version)</p>
         </footer>
     </div>
 
