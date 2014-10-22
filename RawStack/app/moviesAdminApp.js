@@ -5,11 +5,11 @@
     module.config(function ($routeProvider) {
         $routeProvider.when("/moviesAdminList", {
             controller: "moviesAdminListCtrl",
-            templateUrl: "/app/moviesAdminList.html"
+            templateUrl: "/MoviesAdmin/List"
         });
         $routeProvider.when("/moviesAdminEdit/:id", {
             controller: "moviesAdminEditCtrl",
-            templateUrl: "/app/moviesAdminEdit.html"
+            templateUrl: "/MoviesAdmin/Edit"
         });
         $routeProvider.otherwise({
             redirectTo: "/moviesAdminList"

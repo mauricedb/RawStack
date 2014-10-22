@@ -12,5 +12,15 @@ namespace RawStack.Controllers
         {
             return View();
         }
+
+        public ActionResult List()
+        {
+            return View();
+        }
+
+        public ActionResult Edit()
+        {
+            return View();
+        }
     }
 }
