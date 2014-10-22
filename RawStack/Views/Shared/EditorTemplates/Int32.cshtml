@@ -1,0 +1,20 @@
+﻿@{
+    string propertyName = ViewData.ModelMetadata.PropertyName.ToCamelCase();
+    string displayName = ViewData.ModelMetadata.GetDisplayName();
+    bool isRequired = ViewData.ModelMetadata.IsRequired;
+    bool isReadOnly = ViewData.ModelMetadata.IsReadOnly;
+}
+
+
+<div class="form-group" 
+     ng-form="form">
+    <label for="@propertyName" class="col-sm-2 control-label">@displayName</label>
+    <div class="col-sm-10">
+        <input type="number"
+               class="form-control"
+               id="@propertyName"
+               name="input"
+               placeholder="@displayName"
+               ng-model="movie.@propertyName"
+               @if (isRequired) { <text> ng-required="true" </text>  }></div>
+</div>

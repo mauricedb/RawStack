@@ -1,28 +1,37 @@
-﻿@{
+﻿@model RawStack.Models.Movie
+@{
     Layout = null;
 }
 
 <div class="container">
     <div class="well">
         <form class="form-horizontal" role="form">
-            <div class="form-group">
-                <label for="inputTitle" class="col-sm-2 control-label">Title</label>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="movie.title">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="inputSynopsis" class="col-sm-2 control-label">Synopsis</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="inputSynopsis" placeholder="Synopsis" rows="5" ng-model="movie.synopsis"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="criticsConsensus" class="col-sm-2 control-label">Critics Consensus</label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" id="criticsConsensus" placeholder="Critics Consensus" rows="5" ng-model="movie.criticsConsensus"></textarea>
-                </div>
-            </div>
+            @Html.EditorFor(m => m.Title)
+            @Html.EditorFor(m => m.Synopsis)
+            @Html.EditorFor(m => m.CriticsConsensus, new { Rows = 10 })
+            @Html.EditorFor(m => m.MpaaRating)
+            @Html.EditorFor(m => m.Ratings.AudienceScore)
+            @Html.EditorFor(m => m.Ratings.CriticsScore)
+            @Html.EditorFor(m => m.Year)
+
+            @*<div class="form-group">
+                    <label for="inputTitle" class="col-sm-2 control-label">Title</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" id="inputTitle" placeholder="Title" ng-model="movie.title">
+                    </div>
+                </div>*@
+            @*<div class="form-group">
+                    <label for="inputSynopsis" class="col-sm-2 control-label">Synopsis</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="inputSynopsis" placeholder="Synopsis" rows="5" ng-model="movie.synopsis"></textarea>
+                    </div>
+                </div>*@
+            @*<div class="form-group">
+                    <label for="criticsConsensus" class="col-sm-2 control-label">Critics Consensus</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" id="criticsConsensus" placeholder="Critics Consensus" rows="5" ng-model="movie.criticsConsensus"></textarea>
+                    </div>
+                </div>*@
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button class="btn btn-primary">Save</button>
