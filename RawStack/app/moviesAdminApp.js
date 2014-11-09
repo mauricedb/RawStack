@@ -1,8 +1,8 @@
-﻿(function () {
+﻿(function() {
     'use strict';
     var module = angular.module("moviesAdminApp", ["moviesData", "ngGrid", "ngRoute", "rawAjaxBusyIndicator"]);
 
-    module.config(function ($routeProvider) {
+    module.config(function($routeProvider) {
         $routeProvider.when("/moviesAdminList", {
             controller: "moviesAdminListCtrl",
             templateUrl: "/MoviesAdmin/List"
@@ -16,7 +16,7 @@
         });
     });
 
-    module.controller("moviesAdminListCtrl", function ($scope, $location, moviesSvc) {
+    module.controller("moviesAdminListCtrl", function($scope, $location, moviesSvc) {
         $scope.movies = moviesSvc.query();
         $scope.filterOptions = {
             filterText: ''
@@ -30,14 +30,14 @@
                 { field: 'title', displayName: 'Title' },
                 { field: 'abridgedDirectors.join(", ")', displayName: 'Directors' }
             ],
-            afterSelectionChange: function (rowItem) {
+            afterSelectionChange: function(rowItem) {
                 if (rowItem.selected) {
                     $location.path("/moviesAdminEdit/" + rowItem.entity.id);
                 }
             }
         };
 
-        var loadMoreMovies = function (moreData) {
+        var loadMoreMovies = function(moreData) {
             if (moreData) {
                 moviesSvc.nextPage().then(loadMoreMovies);
             }
@@ -45,26 +45,44 @@
         loadMoreMovies(true);
     });
 
-    module.controller("moviesAdminEditCtrl", function ($scope, $route, $location, moviesSvc) {
-        moviesSvc.get($route.current.params.id).then(function (result) {
+    module.controller("moviesAdminEditCtrl", function($scope, $route, $location, moviesSvc) {
+        toastr.options = {
+            "positionClass": "toast-bottom-full-width"
+        };
+        moviesSvc.get($route.current.params.id).then(function(result) {
             $scope.model = result.data;
         });
 
-        $scope.save = function () {
-            moviesSvc.save($scope.model).then(function() {
-                alert("saved");
-
-            }, function (e) {
-                alert("Error saving");
-            });
+        function saveMovie(movie) {
+            return moviesSvc.save(movie).then(
+                function (e) {
+                    toastr.success("Movie saved");
+                    return e;
+                }, function(e) {
+                    for (var prop in e.data.modelState) {
+                        var errors = e.data.modelState[prop];
+                        for (var i = 0; i < errors.length; i++) {
+                            toastr.error(errors[i]);
+                        }
+                    }
+                    return e;
+                });
         }
+
+        $scope.save = function() {
+            saveMovie($scope.model).then(function() {
+                $scope.editForm.$setPristine();
+            });
+        };
 
         $scope.saveAndClose = function () {
-            alert("save and close");
-        }
+            saveMovie($scope.model).then(function() {
+                $location.path("/moviesAdminList");
+            });
+        };
 
-        $scope.closeEdit = function() {
+        $scope.closeEdit = function () {
             $location.path("/moviesAdminList");
-        }
+        };
     });
 }());
