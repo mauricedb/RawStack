@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
@@ -63,6 +65,33 @@ namespace RawStack.Api
         {
             _session.Store(movie);
             _session.SaveChanges();
+        }
+
+        public HttpResponseMessage PutMovie(int id, Movie movie)
+        {
+            try
+            {
+                if (movie.Id != id)
+                {
+                    throw new ValidationException("Invalid movie ID.");
+                }
+                if (ModelState.IsValid)
+                {
+
+                    _session.Store(movie);
+                    _session.SaveChanges();
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
+            }
+            catch (ValidationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         public void DeleteMovie(int id)
