@@ -1,5 +1,6 @@
 ﻿@{
     var propertyName = ViewData.ModelMetadata.PropertyName.ToCamelCase();
+    var modelName = (string)ViewData["Model"] ?? "model";
     var displayName = ViewData.ModelMetadata.GetDisplayName();
     var isRequired = ViewData.ModelMetadata.IsRequired;
     var isReadOnly = ViewData.ModelMetadata.IsReadOnly;
@@ -16,7 +17,7 @@
                       name="input"
                       placeholder="@displayName"
                       rows="@rows"
-                      ng-model="movie.@propertyName"
-                      @if (isRequired) { <text> ng-required="true" </text>   }></textarea>
+                      ng-model="@modelName.@propertyName"
+                      @if (isRequired) { <text> ng-required="true" </text>     }></textarea>
         </div>
     </div>

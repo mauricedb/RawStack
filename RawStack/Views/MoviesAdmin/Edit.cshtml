@@ -10,8 +10,8 @@
             @Html.EditorFor(m => m.Synopsis)
             @Html.EditorFor(m => m.CriticsConsensus, new { Rows = 10 })
             @Html.EditorFor(m => m.MpaaRating)
-            @Html.EditorFor(m => m.Ratings.AudienceScore)
-            @Html.EditorFor(m => m.Ratings.CriticsScore)
+            @Html.EditorFor(m => m.Ratings.AudienceScore, new { Model = "model.ratings" })
+            @Html.EditorFor(m => m.Ratings.CriticsScore, new { Model = "model.ratings" })
             @Html.EditorFor(m => m.Year)
 
             @*<div class="form-group">

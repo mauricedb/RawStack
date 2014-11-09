@@ -47,7 +47,7 @@
 
     module.controller("moviesAdminEditCtrl", function ($scope, $route, moviesSvc) {
         moviesSvc.get($route.current.params.id).then(function (result) {
-            $scope.movie = result.data;
+            $scope.model = result.data;
         });
 
     });

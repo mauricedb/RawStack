@@ -11,7 +11,6 @@ namespace RawStack.Models
         [Required]
         public string Title { get; set; }
         public int? Year { get; set; }
-        [UIHint("Int32")]
         public string MpaaRating { get; set; }
         public Rating Ratings { get; set; }
         [DisplayName("Critics Consensus"), UIHint("TextArea")]
