@@ -45,10 +45,26 @@
         loadMoreMovies(true);
     });
 
-    module.controller("moviesAdminEditCtrl", function ($scope, $route, moviesSvc) {
+    module.controller("moviesAdminEditCtrl", function ($scope, $route, $location, moviesSvc) {
         moviesSvc.get($route.current.params.id).then(function (result) {
             $scope.model = result.data;
         });
 
+        $scope.save = function () {
+            moviesSvc.save($scope.model).then(function() {
+                alert("saved");
+
+            }, function (e) {
+                alert("Error saving");
+            });
+        }
+
+        $scope.saveAndClose = function () {
+            alert("save and close");
+        }
+
+        $scope.closeEdit = function() {
+            $location.path("/moviesAdminList");
+        }
     });
 }());
