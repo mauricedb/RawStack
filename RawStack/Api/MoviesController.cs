@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using System.Web.Http.Controllers;
 using Raven.Client;
 using RawStack.Models;
 
@@ -27,8 +26,6 @@ namespace RawStack.Api
         }
 
         public IEnumerable<Movie> GetMovies([FromUri]MoviesRequest request)
-        //public IEnumerable<Movie> GetMovies(
-        //    int page, [FromUri]string[] genres, [FromUri]string director)
         {
             const int pageSize = 32;
 
