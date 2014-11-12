@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net;
@@ -58,10 +59,26 @@ namespace RawStack.Api
             return movie;
         }
 
-        public void PostMovie(Movie movie)
+        public HttpResponseMessage PostMovie(Movie movie)
         {
-            _session.Store(movie);
-            _session.SaveChanges();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _session.Store(movie);
+                    _session.SaveChanges();
+
+                    HttpResponseMessage result = Request.CreateResponse(HttpStatusCode.Created, movie);
+                    result.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = movie.Id }));
+                    return result;
+                }
+
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+            }
+            catch (ValidationException ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, ex.Message);
+            }
         }
 
         public HttpResponseMessage PutMovie(int id, Movie movie)
@@ -74,7 +91,6 @@ namespace RawStack.Api
                 }
                 if (ModelState.IsValid)
                 {
-
                     _session.Store(movie);
                     _session.SaveChanges();
                 }
@@ -91,11 +107,23 @@ namespace RawStack.Api
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        public void DeleteMovie(int id)
+        public HttpResponseMessage DeleteMovie(int id)
         {
-            var movie = _session.Load<Movie>(id);
-            _session.Delete(movie);
-            _session.SaveChanges();
+            try
+            {
+                var movie = _session.Load<Movie>(id);
+                if (movie != null)
+                {
+                    _session.Delete(movie);
+                    _session.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.NotAcceptable, ex.Message);
+            }
+
+            return Request.CreateResponse(HttpStatusCode.NoContent);
         }
     }
 }
