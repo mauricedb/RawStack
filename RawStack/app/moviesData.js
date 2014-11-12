@@ -12,7 +12,14 @@
         }
 
         function save(movie) {
-            return $http.put("/api/movies/" + movie.id, movie);
+            return $http.put("/api/movies/" + movie.id, movie).then(function(e) {
+                var oldMovie = movies.filter((function(m) {
+                     return m.id == movie.id;
+                })).pop();
+                angular.copy(movie, oldMovie);
+
+                return e;
+            });
         }
 
         function nextPage() {
