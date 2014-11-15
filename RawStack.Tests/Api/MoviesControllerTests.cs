@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client;
 using Raven.Client.Embedded;
@@ -13,7 +14,7 @@ namespace RawStack.Tests.Api
     {
         private MoviesController _controller;
         private EmbeddableDocumentStore _documentStore;
-        private IDocumentSession _session;
+        private IAsyncDocumentSession _session;
 
         [TestInitialize]
         public void TestInitialize()
@@ -24,7 +25,7 @@ namespace RawStack.Tests.Api
                 ConnectionStringName = "RavenDB"
             };
             _documentStore.Initialize();
-            _session = _documentStore.OpenSession();
+            _session = _documentStore.OpenAsyncSession();
             _controller = new MoviesController(_session);
         }
 
@@ -44,116 +45,112 @@ namespace RawStack.Tests.Api
         }
 
         [TestMethod]
-        public void GetMoviesShouldZeroLoadMovies()
+        public async Task GetMoviesShouldZeroLoadMovies()
         {
             // Act
             var request = new MoviesController.MoviesRequest();
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(0, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesShouldOneLoadMovies()
+        public async Task GetMoviesShouldOneLoadMovies()
         {
             // Arrange
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
             var request = new MoviesController.MoviesRequest();
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(1, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesShouldTwoLoadMovies()
+        public async Task GetMoviesShouldTwoLoadMovies()
         {
             // Arrange
-            _session.Store(new Movie());
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie());
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
             var request = new MoviesController.MoviesRequest();
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesShouldZeroLoadMovieWithGenre()
+        public async Task GetMoviesShouldZeroLoadMovieWithGenre()
         {
             // Arrange
-            _session.Store(new Movie() { Genres = new[] { "g1" } });
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie { Genres = new[] { "g1" } });
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
-            var request = new MoviesController.MoviesRequest();
-            request.Genres = new[] { "g2" };
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            var request = new MoviesController.MoviesRequest { Genres = new[] { "g2" } };
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(0, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesShouldOneLoadMovieWithGenre()
+        public async Task GetMoviesShouldOneLoadMovieWithGenre()
         {
             // Arrange
-            _session.Store(new Movie() { Genres = new[] { "g1" } });
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie { Genres = new[] { "g1" } });
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
-            var request = new MoviesController.MoviesRequest();
-            request.Genres = new[] { "g1" };
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            var request = new MoviesController.MoviesRequest { Genres = new[] { "g1" } };
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(1, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesShouldTwoLoadMovieWithGenre()
+        public async Task GetMoviesShouldTwoLoadMovieWithGenre()
         {
             // Arrange
-            _session.Store(new Movie() { Genres = new[] { "g1" } });
-            _session.Store(new Movie() { Genres = new[] { "g1", "g2" } });
-            _session.Store(new Movie() { Genres = new[] { "g1", "g2" } });
-            _session.Store(new Movie() { Genres = new[] { "g2" } });
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie { Genres = new[] { "g1" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g1", "g2" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g1", "g2" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g2" } });
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
-            var request = new MoviesController.MoviesRequest();
-            request.Genres = new[] { "g1", "g2" };
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            var request = new MoviesController.MoviesRequest { Genres = new[] { "g1", "g2" } };
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());
         }
 
         [TestMethod]
-        public void GetMoviesWithSpacesShouldTwoLoadMovieWithGenre()
+        public async Task GetMoviesWithSpacesShouldTwoLoadMovieWithGenre()
         {
             // Arrange
-            _session.Store(new Movie() { Genres = new[] { "g 1" } });
-            _session.Store(new Movie() { Genres = new[] { "g 1", "g 2" } });
-            _session.Store(new Movie() { Genres = new[] { "g 1", "g 2" } });
-            _session.Store(new Movie() { Genres = new[] { "g 2" } });
-            _session.Store(new Movie());
-            _session.SaveChanges();
+            await _session.StoreAsync(new Movie { Genres = new[] { "g 1" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g 1", "g 2" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g 1", "g 2" } });
+            await _session.StoreAsync(new Movie { Genres = new[] { "g 2" } });
+            await _session.StoreAsync(new Movie());
+            await _session.SaveChangesAsync();
 
             // Act
-            var request = new MoviesController.MoviesRequest();
-            request.Genres = new[] { "g 1", "g 2" };
-            IEnumerable<Movie> movies = _controller.GetMovies(request);
+            var request = new MoviesController.MoviesRequest { Genres = new[] { "g 1", "g 2" } };
+            IEnumerable<Movie> movies = await _controller.GetMovies(request);
 
             // Assert
             Assert.AreEqual(2, movies.Count());

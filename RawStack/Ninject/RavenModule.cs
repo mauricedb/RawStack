@@ -20,6 +20,10 @@ namespace RawStack.Ninject
             Bind<IDocumentSession>()
                 .ToMethod(c => c.Kernel.Get<IDocumentStore>().OpenSession())
                 .InRequestScope();
+
+            Bind<IAsyncDocumentSession>()
+                .ToMethod(c => c.Kernel.Get<IDocumentStore>().OpenAsyncSession())
+                .InRequestScope();
         }
 
         private IDocumentStore InitDocStore(IContext context)
