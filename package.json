@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/mauricedb/RawStack",
   "devDependencies": {
-    "karma": "^0.12.16",
-    "karma-jasmine": "^0.1.5",
-    "karma-phantomjs-launcher": "^0.1.4"
+    "karma": "^4.0.0",
+    "karma-jasmine": "^2.0.1",
+    "karma-phantomjs-launcher": "^1.0.4"
   }
 }
